@@ -58,49 +58,56 @@ void VisualizarEstudiantes(Estudiante datos){
 			VisualizarEst(Estudiantes[i],i+1);
 		}
 	}
+	gotoxy(20,4);printf("Cantidad Total de Registros: %d",CantidadRegistros);
 	
 	gotoxy (2,23); system("pause");
 	menu();
 }
 
 void VisualizarEst(Estudiante datos, int posicion){
-	
 	if(posicion == 1){
-		gotoxy(2,4);printf("----------------------------");
-		gotoxy(2,5);printf("Nombre: %s",datos.nombre);
-		gotoxy(2,6);printf("Apellido: %s",datos.apellido);
-		gotoxy(2,7);printf("Edad: %d",datos.edad);
-		gotoxy(2,8);printf("Cedula: %d",datos.cedula);
-		gotoxy(2,9);printf("Direccion: %s",datos.direccion);
-		gotoxy(2,10);printf("----------------------------");
+		gotoxy(2,5);printf("----------------------------");
+		gotoxy(2,6);printf("-- Numero de Registro : %d--",CantidadRegistros);
+		gotoxy(2,7);printf("----------------------------");
+		gotoxy(2,8);printf("Nombre: %s",datos.nombre);
+		gotoxy(2,9);printf("Apellido: %s",datos.apellido);
+		gotoxy(2,10);printf("Edad: %d",datos.edad);
+		gotoxy(2,11);printf("Cedula: %d",datos.cedula);
+		gotoxy(2,12);printf("Direccion: %s",datos.direccion);
+		gotoxy(2,13);printf("----------------------------");
 	}
 	else if(posicion == 2){
-		gotoxy(2,13);printf("----------------------------");
-		gotoxy(2,14);printf("Nombre: %s",datos.nombre);
-		gotoxy(2,15);printf("Apellido: %s",datos.apellido);
-		gotoxy(2,16);printf("Edad: %d",datos.edad);
-		gotoxy(2,17);printf("Cedula: %d",datos.cedula);
-		gotoxy(2,18);printf("Direccion: %s",datos.direccion);
-		gotoxy(2,19);printf("----------------------------");
-		gotoxy(2,11);printf("--%d--",CantidadRegistros );		
+		gotoxy(2,14);printf("----------------------------");
+		gotoxy(2,15);printf("-- Numero de Registro : %d--",CantidadRegistros);
+		gotoxy(2,16);printf("----------------------------");
+		gotoxy(2,17);printf("Nombre: %s",datos.nombre);
+		gotoxy(2,18);printf("Apellido: %s",datos.apellido);
+		gotoxy(2,19);printf("Edad: %d",datos.edad);
+		gotoxy(2,20);printf("Cedula: %d",datos.cedula);
+		gotoxy(2,21);printf("Direccion: %s",datos.direccion);
+		gotoxy(2,22);printf("----------------------------");		
 	}
 	else if(posicion == 3){
-		gotoxy(35,4);printf("----------------------------");
-		gotoxy(35,5);printf("Nombre: %s",datos.nombre);
-		gotoxy(35,6);printf("Apellido: %s",datos.apellido);
-		gotoxy(35,7);printf("Edad: %d",datos.edad);
-		gotoxy(35,8);printf("Cedula: %d",datos.cedula);
-		gotoxy(35,9);printf("Direccion: %s",datos.direccion);
-		gotoxy(35,10);printf("----------------------------");	
+		gotoxy(35,5);printf("----------------------------");
+		gotoxy(35,6);printf("-- Numero de Registro : %d--",CantidadRegistros);
+		gotoxy(35,7);printf("----------------------------");
+		gotoxy(35,8);printf("Nombre: %s",datos.nombre);
+		gotoxy(35,9);printf("Apellido: %s",datos.apellido);
+		gotoxy(35,10);printf("Edad: %d",datos.edad);
+		gotoxy(35,11);printf("Cedula: %d",datos.cedula);
+		gotoxy(35,12);printf("Direccion: %s",datos.direccion);
+		gotoxy(35,13);printf("----------------------------");	
 	}
 	else if(posicion == 4){
-		gotoxy(35,13);printf("----------------------------");
-		gotoxy(35,14);printf("Nombre: %s",datos.nombre);
-		gotoxy(35,15);printf("Apellido: %s",datos.apellido);
-		gotoxy(35,16);printf("Edad: %d",datos.edad);
-		gotoxy(35,17);printf("Cedula: %d",datos.cedula);
-		gotoxy(35,18);printf("Direccion: %s",datos.direccion);
-		gotoxy(35,19);printf("----------------------------");	
+		gotoxy(35,14);printf("----------------------------");
+		gotoxy(35,15);printf("-- Numero de Registro : %d--",CantidadRegistros);
+		gotoxy(35,16);printf("----------------------------");
+		gotoxy(35,17);printf("Nombre: %s",datos.nombre);
+		gotoxy(35,18);printf("Apellido: %s",datos.apellido);
+		gotoxy(35,19);printf("Edad: %d",datos.edad);
+		gotoxy(35,20);printf("Cedula: %d",datos.cedula);
+		gotoxy(35,21);printf("Direccion: %s",datos.direccion);
+		gotoxy(35,22);printf("----------------------------");	
 	}
 	
 }

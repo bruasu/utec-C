@@ -13,8 +13,8 @@ typedef struct Estudiante{
 } Estudiante;
 
 //Variables Globales
-Estudiante Estudiantes[10] = {"Marcos","Farias",32,1212,"asdasd",0};
-int CantidadRegistros = 1;
+Estudiante Estudiantes[10] = {"Bruno","Asuncion",32,1212,"asdasd",0,"Marcos","Farias",32,1212,"asdasd",0,"Pedro","Antunes",32,1212,"asdasd",0,"Juan","Pablo",32,1212,"asdasd",0,"Pepe","Freitas",20,1212,"asdasd",0};
+int CantidadRegistros = 5;
 
 
 void ingreso(){	
@@ -45,26 +45,80 @@ void ingreso(){
 	menu();
 }
 
-void VisualizarEstudiantes(Estudiante datos, int retorno){
+//La variable datos se utiliza si solamente tenemos 1 estudiante registrado
+//La variable retorno ingresa como valor 1 o 2, 1 es para retornar al menu principal y 2 para el menu Guardar
+//La variable posicion es para determinar cuales son los estudiantes que se estan mostrando. por ejemplo cuanto tiene el valor 1 quiere decir que esta mostrando los primero 4 estudiantes.
+void VisualizarEstudiantes(Estudiante datos, int retorno, int posicion){
 	DibujaTituloCuadro();
 	
 	if(CantidadRegistros == 0){
 		VisualizarEst(datos, 1);
 	}
 	
-	if(CantidadRegistros>4){
-		
-	}
-	
-	if(CantidadRegistros>0){
+	if(CantidadRegistros>0 && CantidadRegistros <=4){
 		int i = 0;
-		for(i=0;i<CantidadRegistros;i++){
+		for(i=0;i<4;i++){
 			VisualizarEst(Estudiantes[i],i+1);
 		}
 	}
+	else if(posicion == 1){
+		int i = 0;
+		for(i=0;i<4;i++){
+			VisualizarEst(Estudiantes[i],i+1);
+		}
+	}
+	
+	if(CantidadRegistros>4 && posicion > 1){
+		int i = 0;
+		int contador = 1;
+		int inicio = 0;
+		int fin = 0;
+		int cantidadCuadros = 0;
+		
+		if(CantidadRegistros % 4 == 0){
+			cantidadCuadros = CantidadRegistros / 4;
+		}
+		else if(CantidadRegistros % 4 > 0){
+			cantidadCuadros = (CantidadRegistros / 4)+1;
+		}
+	
+		if(posicion <= cantidadCuadros ){
+			inicio = (posicion * 4) - 4;
+			fin = CantidadRegistros-1;
+		}
+		//gotoxy(2,6);printf("Testing %d - %d",inicio,fin);
+		for(i=inicio;i<=fin;i++){
+			gotoxy(2,6);printf("Testing %d - %d",inicio,fin);
+			VisualizarEst(Estudiantes[i],contador);
+			contador++;
+		}
+	}	
+
 	gotoxy(20,4);printf("Cantidad Total de Registros: %d",CantidadRegistros);
 	
-	gotoxy (2,23); system("pause");
+	if(CantidadRegistros <= 4 && posicion>1){
+		gotoxy (2,23);system("pause");
+	}
+	else if(CantidadRegistros <= 4 && posicion == 1){
+		gotoxy (2,23);system("pause");
+	}
+	else if(posicion == 1){
+		gotoxy (2,23);printf("Proxima Pagina  -  ");system("pause");
+		VisualizarEstudiantes(datos, 1,posicion+1);
+	}
+	else if(posicion > 1){		
+		int inicio, fin;
+		
+		inicio = (posicion * 4) - 3;
+		fin = posicion*4;
+		
+		if(CantidadRegistros>= inicio && CantidadRegistros <=fin){
+			gotoxy (2,23);system("pause");
+		}else{
+			gotoxy (2,23); printf("Proxima Pagina");system("pause");
+			VisualizarEstudiantes(datos, 1,posicion+1);	
+		}
+	}
 	
 	if(retorno == 1){
 		menu();
@@ -152,7 +206,7 @@ void SeleccionGuardar(){
 		
 		
 		if(valor == 1){
-			VisualizarEstudiantes(Estudiantes[0],2);
+			VisualizarEstudiantes(Estudiantes[0],2,1);
 		}
 		else if(valor == 2){
 			MenuGuardarEstudiante();
@@ -202,7 +256,7 @@ void menu(){
 			break;
 		
 		case 2:
-			VisualizarEstudiantes(Estudiantes[0],1);
+			VisualizarEstudiantes(Estudiantes[0],1,1);
 			break;
 		
 		case 3:
@@ -225,8 +279,9 @@ main(){
 
 	system("mode con: cols=80 lines=25");
 	system("COLOR B0");
-	
 	menu();
+	
+	
 	
 	gotoxy (2,23); system("pause");
 }

@@ -13,8 +13,8 @@ typedef struct Estudiante{
 } Estudiante;
 
 //Variables Globales
-Estudiante Estudiantes[10];
-int CantidadRegistros = 0;
+Estudiante Estudiantes[10] = {"Marcos","Farias",32,1212,"asdasd",0};
+int CantidadRegistros = 1;
 
 
 void ingreso(){	
@@ -45,11 +45,15 @@ void ingreso(){
 	menu();
 }
 
-void VisualizarEstudiantes(Estudiante datos){
+void VisualizarEstudiantes(Estudiante datos, int retorno){
 	DibujaTituloCuadro();
 	
 	if(CantidadRegistros == 0){
 		VisualizarEst(datos, 1);
+	}
+	
+	if(CantidadRegistros>4){
+		
 	}
 	
 	if(CantidadRegistros>0){
@@ -61,13 +65,19 @@ void VisualizarEstudiantes(Estudiante datos){
 	gotoxy(20,4);printf("Cantidad Total de Registros: %d",CantidadRegistros);
 	
 	gotoxy (2,23); system("pause");
-	menu();
+	
+	if(retorno == 1){
+		menu();
+	}else if(retorno == 2){
+		SeleccionGuardar();
+	}
+	
 }
 
 void VisualizarEst(Estudiante datos, int posicion){
 	if(posicion == 1){
 		gotoxy(2,5);printf("----------------------------");
-		gotoxy(2,6);printf("-- Numero de Registro : %d--",CantidadRegistros);
+		gotoxy(2,6);printf("-- Numero de Registro : %d",posicion);
 		gotoxy(2,7);printf("----------------------------");
 		gotoxy(2,8);printf("Nombre: %s",datos.nombre);
 		gotoxy(2,9);printf("Apellido: %s",datos.apellido);
@@ -78,7 +88,7 @@ void VisualizarEst(Estudiante datos, int posicion){
 	}
 	else if(posicion == 2){
 		gotoxy(2,14);printf("----------------------------");
-		gotoxy(2,15);printf("-- Numero de Registro : %d--",CantidadRegistros);
+		gotoxy(2,15);printf("-- Numero de Registro : %d",posicion);
 		gotoxy(2,16);printf("----------------------------");
 		gotoxy(2,17);printf("Nombre: %s",datos.nombre);
 		gotoxy(2,18);printf("Apellido: %s",datos.apellido);
@@ -89,7 +99,7 @@ void VisualizarEst(Estudiante datos, int posicion){
 	}
 	else if(posicion == 3){
 		gotoxy(35,5);printf("----------------------------");
-		gotoxy(35,6);printf("-- Numero de Registro : %d--",CantidadRegistros);
+		gotoxy(35,6);printf("-- Numero de Registro : %d",posicion);
 		gotoxy(35,7);printf("----------------------------");
 		gotoxy(35,8);printf("Nombre: %s",datos.nombre);
 		gotoxy(35,9);printf("Apellido: %s",datos.apellido);
@@ -100,7 +110,7 @@ void VisualizarEst(Estudiante datos, int posicion){
 	}
 	else if(posicion == 4){
 		gotoxy(35,14);printf("----------------------------");
-		gotoxy(35,15);printf("-- Numero de Registro : %d--",CantidadRegistros);
+		gotoxy(35,15);printf("-- Numero de Registro : %d",posicion);
 		gotoxy(35,16);printf("----------------------------");
 		gotoxy(35,17);printf("Nombre: %s",datos.nombre);
 		gotoxy(35,18);printf("Apellido: %s",datos.apellido);
@@ -112,19 +122,63 @@ void VisualizarEst(Estudiante datos, int posicion){
 	
 }
 
-void GuardarEstudiante(){
+void GuardarEstudiante(int posicion){
 	FILE* fichero;
     fichero = fopen("Parcial.txt", "wt");
-    fprintf(fichero,"Nombre: %s \n",Estudiantes[0].nombre);
-    fprintf(fichero,"Apellido: %s \n",Estudiantes[0].apellido);
-    fprintf(fichero,"Edad: %d \n",Estudiantes[0].edad);
-    fprintf(fichero,"Cedula: %d \n",Estudiantes[0].cedula);
-    fprintf(fichero,"Direccion: %s \n",Estudiantes[0].direccion);
+    fprintf(fichero,"Nombre: %s \n",Estudiantes[posicion].nombre);
+    fprintf(fichero,"Apellido: %s \n",Estudiantes[posicion].apellido);
+    fprintf(fichero,"Edad: %d \n",Estudiantes[posicion].edad);
+    fprintf(fichero,"Cedula: %d \n",Estudiantes[posicion].cedula);
+    fprintf(fichero,"Direccion: %s \n",Estudiantes[posicion].direccion);
     fclose(fichero);
     
 	gotoxy (2,15);printf("Proceso completado");
     gotoxy (2,23); system("pause");
-    menu();
+    SeleccionGuardar();
+}
+
+void SeleccionGuardar(){
+		int valor = 0;
+		DibujaTituloCuadro();
+		gotoxy(2,5);printf("-------------------------------------------");
+		gotoxy(2,6);printf("-- Cantidad de Estudiantes Registrados : %d",CantidadRegistros);
+		gotoxy(2,7);printf("-------------------------------------------");
+		gotoxy(2,8);printf("Elige una Opcion:");	
+		gotoxy (2,10);printf("1. Ver Datos Estudiantes: ");
+		gotoxy (2,11);printf("2. Elige un numero de Registro: ");
+		gotoxy (2,12);printf("3. Volver al Menu: ");
+		fflush(stdin);
+		gotoxy (2,13);scanf("%d",&valor);
+		
+		
+		if(valor == 1){
+			VisualizarEstudiantes(Estudiantes[0],2);
+		}
+		else if(valor == 2){
+			MenuGuardarEstudiante();
+		}
+		else if(valor == 3){
+			menu();
+		}
+}
+void MenuGuardarEstudiante(){
+	int numero = 0;
+		DibujaTituloCuadro();
+		gotoxy(2,5);printf("-----------------------------------------------------");
+		gotoxy(2,6);printf("-- Selecione el numero de Registro que Desea Guardar: ");
+		gotoxy(2,7);printf("-----------------------------------------------------");
+		gotoxy(2,8);printf("-- Para volver al Menu Guardar Digite -1 --");
+		fflush(stdin);
+		gotoxy(2,10);scanf("%d",&numero);
+		fflush(stdin);
+		
+		if(numero >= 0){
+			GuardarEstudiante(numero-1);
+		}
+		else if(numero == -1){
+			SeleccionGuardar();
+		}
+		
 }
 
 void menu(){
@@ -148,11 +202,11 @@ void menu(){
 			break;
 		
 		case 2:
-			VisualizarEstudiantes(Estudiantes[0]);
+			VisualizarEstudiantes(Estudiantes[0],1);
 			break;
 		
 		case 3:
-			GuardarEstudiante();
+			SeleccionGuardar();
 			break;
 		case 4:
 			
@@ -168,9 +222,10 @@ void menu(){
 	
 }
 main(){	
+
 	system("mode con: cols=80 lines=25");
 	system("COLOR B0");
-		
+	
 	menu();
 	
 	gotoxy (2,23); system("pause");

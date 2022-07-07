@@ -51,23 +51,25 @@ void ingreso(){
 void VisualizarEstudiantes(Estudiante datos, int retorno, int posicion){
 	DibujaTituloCuadro();
 	
+	// si no tenemos ningun registro de estudiantes
 	if(CantidadRegistros == 0){
-		VisualizarEst(datos, 1);
+		VisualizarEst(datos, 1, 1);
 	}
 	
+	//si tenemos 1 asta 4 estudiantes. mostraria solo una pantalla
 	if(CantidadRegistros>0 && CantidadRegistros <=4){
 		int i = 0;
 		for(i=0;i<4;i++){
-			VisualizarEst(Estudiantes[i],i+1);
+			VisualizarEst(Estudiantes[i],i+1,i+1);
 		}
 	}
 	else if(posicion == 1){
 		int i = 0;
 		for(i=0;i<4;i++){
-			VisualizarEst(Estudiantes[i],i+1);
+			VisualizarEst(Estudiantes[i],i+1,i+1);
 		}
 	}
-	
+	// calculamos que pocición del vector vamos a mostrar si son mas de una pantalla, del 5 estudiante en adelante
 	if(CantidadRegistros>4 && posicion > 1){
 		int i = 0;
 		int contador = 1;
@@ -88,13 +90,14 @@ void VisualizarEstudiantes(Estudiante datos, int retorno, int posicion){
 		}
 		//gotoxy(2,6);printf("Testing %d - %d",inicio,fin);
 		for(i=inicio;i<=fin;i++){
-			gotoxy(2,6);printf("Testing %d - %d",inicio,fin);
-			VisualizarEst(Estudiantes[i],contador);
+			//gotoxy(2,6);printf("Testing %d - %d",inicio,fin);
+			VisualizarEst(Estudiantes[i],contador,i+1);
 			contador++;
 		}
 	}	
 
 	gotoxy(20,4);printf("Cantidad Total de Registros: %d",CantidadRegistros);
+	
 	
 	if(CantidadRegistros <= 4 && posicion>1){
 		gotoxy (2,23);system("pause");
@@ -120,6 +123,7 @@ void VisualizarEstudiantes(Estudiante datos, int retorno, int posicion){
 		}
 	}
 	
+	//la segunda variable que recibe la funcion se utiliza aqui y define para donde va retornar despues de visualizar los estudiantes, dependiendo de donde se este utilizando esta funcion
 	if(retorno == 1){
 		menu();
 	}else if(retorno == 2){
@@ -127,11 +131,13 @@ void VisualizarEstudiantes(Estudiante datos, int retorno, int posicion){
 	}
 	
 }
-
-void VisualizarEst(Estudiante datos, int posicion){
+//1 Parametro - Recibimos los datos del estudiante
+//2 Parametro - Recibimos la posicion en la que queremos que se imprima los datos en la pantalla que Son 4
+//3 Parametro - El numero de Registro
+void VisualizarEst(Estudiante datos, int posicion, int NumeroRegistro){
 	if(posicion == 1){
 		gotoxy(2,5);printf("----------------------------");
-		gotoxy(2,6);printf("-- Numero de Registro : %d",posicion);
+		gotoxy(2,6);printf("-- Numero de Registro : %d",NumeroRegistro);
 		gotoxy(2,7);printf("----------------------------");
 		gotoxy(2,8);printf("Nombre: %s",datos.nombre);
 		gotoxy(2,9);printf("Apellido: %s",datos.apellido);
@@ -142,7 +148,7 @@ void VisualizarEst(Estudiante datos, int posicion){
 	}
 	else if(posicion == 2){
 		gotoxy(2,14);printf("----------------------------");
-		gotoxy(2,15);printf("-- Numero de Registro : %d",posicion);
+		gotoxy(2,15);printf("-- Numero de Registro : %d",NumeroRegistro);
 		gotoxy(2,16);printf("----------------------------");
 		gotoxy(2,17);printf("Nombre: %s",datos.nombre);
 		gotoxy(2,18);printf("Apellido: %s",datos.apellido);
@@ -153,7 +159,7 @@ void VisualizarEst(Estudiante datos, int posicion){
 	}
 	else if(posicion == 3){
 		gotoxy(35,5);printf("----------------------------");
-		gotoxy(35,6);printf("-- Numero de Registro : %d",posicion);
+		gotoxy(35,6);printf("-- Numero de Registro : %d",NumeroRegistro);
 		gotoxy(35,7);printf("----------------------------");
 		gotoxy(35,8);printf("Nombre: %s",datos.nombre);
 		gotoxy(35,9);printf("Apellido: %s",datos.apellido);
@@ -164,7 +170,7 @@ void VisualizarEst(Estudiante datos, int posicion){
 	}
 	else if(posicion == 4){
 		gotoxy(35,14);printf("----------------------------");
-		gotoxy(35,15);printf("-- Numero de Registro : %d",posicion);
+		gotoxy(35,15);printf("-- Numero de Registro : %d",NumeroRegistro);
 		gotoxy(35,16);printf("----------------------------");
 		gotoxy(35,17);printf("Nombre: %s",datos.nombre);
 		gotoxy(35,18);printf("Apellido: %s",datos.apellido);
@@ -178,12 +184,13 @@ void VisualizarEst(Estudiante datos, int posicion){
 
 void GuardarEstudiante(int posicion){
 	FILE* fichero;
-    fichero = fopen("Parcial.txt", "wt");
+    fichero = fopen("Parcial.txt", "a+");
     fprintf(fichero,"Nombre: %s \n",Estudiantes[posicion].nombre);
     fprintf(fichero,"Apellido: %s \n",Estudiantes[posicion].apellido);
     fprintf(fichero,"Edad: %d \n",Estudiantes[posicion].edad);
     fprintf(fichero,"Cedula: %d \n",Estudiantes[posicion].cedula);
     fprintf(fichero,"Direccion: %s \n",Estudiantes[posicion].direccion);
+    fprintf(fichero,"\n----------------\n");
     fclose(fichero);
     
 	gotoxy (2,15);printf("Proceso completado");
@@ -263,10 +270,10 @@ void menu(){
 			SeleccionGuardar();
 			break;
 		case 4:
-			
+			EnConstrucion();
 			break;
 		case 5:
-			
+			EnConstrucion();
 			break;
 		
 		case 6:
@@ -274,6 +281,12 @@ void menu(){
 			break;
 	}
 	
+}
+void EnConstrucion(){
+		DibujaTituloCuadro();
+		gotoxy (30,6);printf("EN CONSTRUCION");
+		gotoxy (2,23); system("pause");
+		menu();
 }
 main(){	
 
